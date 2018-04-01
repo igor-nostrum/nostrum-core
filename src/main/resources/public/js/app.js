@@ -1,7 +1,16 @@
-angular.module('demo', [])
-.controller('Hello', function($scope, $http) {
-    $http.get('http://rest-service.guides.spring.io/greeting').
-        then(function(response) {
-            $scope.greeting = response.data;
-        });
+var app = angular.module('myApp', []);
+app.controller('FormCtrl', function ($scope, $http) {
+    $scope.submitForm = function() {
+        console.log("posting data....");
+        $http.post('/public/user/add', JSON.stringify($scope.formData))
+            .then(function(success) {
+                if (success) {
+                    $scope.message = 'OK';
+                } else {
+                    $scope.message = 'ERROR';
+                }
+            }).catch(function (err) {
+                console.log(err);
+            });
+    };
 });

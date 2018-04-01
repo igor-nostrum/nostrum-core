@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org" 
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      ng-app="demo">
+      ng-app="myApp">
     <head>
         <title>Spring Security Example</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
@@ -13,10 +13,14 @@
 
         <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
 
-		<div ng-controller="Hello">
-			<p>The ID is {{greeting.id}}</p>
-			<p>The content is {{greeting.content}}</p>
-		</div>
+		<form name="saveTemplateData" action="#" ng-controller="FormCtrl">
+			<p>{{message}}</p>
+
+			Full name:     <br/><input type="text" ng-model="formData.name">  <br/><br/>
+			Email Address: <br/><input type="text" ng-model="formData.email"> <br/><br/>
+
+            <button ng-click="submitForm()">Save</button>
+		</form>
 
     </body>
 </html>
