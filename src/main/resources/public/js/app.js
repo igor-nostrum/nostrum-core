@@ -1,5 +1,9 @@
 var app = angular.module('myApp', []);
 app.controller('FormCtrl', function ($scope, $http) {
+    $scope.reset = function() {
+        $scope.formData = {};
+    };
+
     $scope.submitForm = function() {
         console.log("posting data....");
 
@@ -10,15 +14,21 @@ app.controller('FormCtrl', function ($scope, $http) {
               'Content-Type': 'application/json'
             },
             data: {
-                "user" : $scope.formData
+                "name"  : $scope.formData.name,
+                "email" : $scope.formData.email
             }
         };
 
         $http(req)
-            .then(function successCallback(response) {
-                $scope.message = 'OK';
-            }, function errorCallback(response) {
-                $scope.message = 'ERROR';
+            .then(function errorCallback(response) {
+                console.log('ERROR');
+                $scope.messageText = 'ERROR';
+                $scope.messageType = 'alert-danger';
+            },function successCallback(response) {
+                console.log('OK');
+                $scope.messageText = 'OK';
+                $scope.messageType = 'alert-info';
+                $scope.reset();
             })
             .catch(function (err) {
                 console.log(err);
