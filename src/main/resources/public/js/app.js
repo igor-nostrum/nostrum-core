@@ -4,7 +4,7 @@ app.controller('FormCtrl', function ($scope, $http) {
         $scope.formData = {};
     };
 
-    $scope.submitForm = function() {
+    $scope.submitForm = function(event) {
         console.log("posting data....");
 
         var req = {
@@ -22,16 +22,21 @@ app.controller('FormCtrl', function ($scope, $http) {
         $http(req)
             .then(function errorCallback(response) {
                 console.log('ERROR');
+                $scope.reset();
                 $scope.messageText = 'ERROR';
                 $scope.messageType = 'alert-danger';
             },function successCallback(response) {
                 console.log('OK');
-                $scope.messageText = 'OK';
-                $scope.messageType = 'alert-info';
+                console.log(response);
                 $scope.reset();
+                $scope.messageText = 'OK. New password: ' + response;
+                $scope.messageType = 'alert-info';
             })
             .catch(function (err) {
                 console.log(err);
             });
+        
+        event.stopPropagation();
+        event.preventDefault();
     };
 });

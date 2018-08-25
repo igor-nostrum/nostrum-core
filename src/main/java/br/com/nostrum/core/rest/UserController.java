@@ -20,13 +20,13 @@ public class UserController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	@RequestMapping(path="/add")
+	@RequestMapping(path="/add", produces = "application/json")
 	public @ResponseBody String addNewUser (@RequestBody User user) {
 		String passwordPlain = RandomStringUtils.randomAlphanumeric(10);
 		String passwordCrypted = passwordEncoder.encode(passwordPlain);
 		user.setPassword(passwordCrypted);
 		userRepository.save(user);
-		return "Saved";
+		return passwordPlain;
 	}
 
 	@RequestMapping(path="/list")
